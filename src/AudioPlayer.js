@@ -25,11 +25,14 @@ function AudioPlayer() {
         reader.readAsDataURL(file);
         reader.onload = function () {
             const audio = new Audio(reader.result)
+
             audio.addEventListener("loadedmetadata", ()=>{setAudioLength(audio.duration)})
-            setAudioFile(audio);
             audio.addEventListener('timeupdate', (event) => {
                 setAudioTime(audio.currentTime);
             });
+
+            setAudioFile(audio);
+
         };
         reader.onerror = function (error) {
             console.log('Error: ', error);
@@ -48,6 +51,12 @@ function AudioPlayer() {
         audioFile.pause()
     }
 
+    function addTen(){
+        audioFile.currentTime= audioTime + 10
+    }
+    function minusTen(){
+        audioFile.currentTime= audioTime - 10
+    }
     
 
     return (
@@ -69,6 +78,16 @@ function AudioPlayer() {
             <button
             onClick={()=>{pauseFile()}}
             >pause
+            </button>
+
+            <button
+            onClick={()=>{addTen()}}
+            > + 10
+            </button>
+
+            <button
+            onClick={()=>{minusTen()}}
+            > - 10
             </button>
 
         </div>
