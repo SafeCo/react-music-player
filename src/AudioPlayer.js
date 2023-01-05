@@ -3,6 +3,7 @@ import "./AudioPlayer.css"
 
 function AudioPlayer() {
 
+    const clickRef = useRef()
 
     const [audioFile, setAudioFile] = useState({})
     const [audioLength, setAudioLength] = useState("")
@@ -44,6 +45,13 @@ function AudioPlayer() {
         };
     }
 
+    const checkWidth = (e)=>{
+        let width = clickRef.current.clientWidth
+        const offset = e.nativeEvent.offsetX
+        const divprogress = offset / width * 100;
+        audioFile.currentTime = divprogress / 100 * audioLength
+    }
+
 
 
 
@@ -72,7 +80,7 @@ function AudioPlayer() {
                 onChange={e=>addFile(e)}
             />
             <div className="seekerBar__container">
-                <div className="seekerBar__gray">
+                <div ref={clickRef} onClick={checkWidth} className="seekerBar__gray">
                     <div style={barStyle} className="seekerBar__progress"></div>
                 </div>
 
