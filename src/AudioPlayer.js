@@ -1,8 +1,13 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import "./AudioPlayer.css"
 
 function AudioPlayer() {
+
+
     const [audioFile, setAudioFile] = useState({})
+    const [audioLength, setAudioLength] = useState("")
+
+
     const addFile = (e) => {
         if (e.target.files[0]) {
             // setAudioFile(URL.createObjectURL(e.target.files[0]));
@@ -10,33 +15,37 @@ function AudioPlayer() {
         }
     };
 
+    useEffect(()=>{
+        console.log(audioFile)
+    },[audioFile])
 
     function getBase64(file) {
         var reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function () {
-            setAudioFile(new Audio(reader.result));
+            const audio = new Audio(reader.result)
+            audio.addEventListener("loadedmetadata", ()=>{console.log(audio.duration)})
+            
+            setAudioFile(audio);
         };
         reader.onerror = function (error) {
             console.log('Error: ', error);
         };
     }
 
+
+
+
+
     function playFile(){
         audioFile.play()
-        console.log(audioFile.duration)
-        // const snd = new Audio(audioFile)
-        // snd.play()
+
     }
     function pauseFile(){
         audioFile.pause()
-        // const snd = new Audio(audioFile)
-        // snd.play()
     }
 
-    useEffect(()=>{
-        console.log(audioFile)
-    },[audioFile])
+    
 
     return (
         <div>
@@ -45,15 +54,23 @@ function AudioPlayer() {
                 type="file"
                 onChange={e=>addFile(e)}
             />
+            <div>{audioLength}</div>
+
+            {}
+
+
 
             <button
             onClick={()=>{playFile()}}
             >play
             </button>
+
+
             <button
             onClick={()=>{pauseFile()}}
             >pause
             </button>
+
         </div>
     )
 }
