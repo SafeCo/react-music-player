@@ -1,0 +1,22 @@
+.seekerBar__container{
+    border: solid red 1px;
+    height: 100px;
+
+}
+
+.seekerBar__gray{
+    position: relative;
+    border: solid blue 1px;
+    background-color: gray;
+    width: 200px;
+    height: 30px;
+}
+.seekerBar__progress{
+    position: absolute;
+    background-color: green;
+    height: 20px;
+    z-index: 1;
+}
+
+
+

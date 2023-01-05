@@ -7,7 +7,11 @@ function AudioPlayer() {
     const [audioFile, setAudioFile] = useState({})
     const [audioLength, setAudioLength] = useState("")
     const [audioTime, setAudioTime] = useState("")
+    const [progress, setProgress] = useState("")
 
+    const barStyle = {
+        width : progress+ "%"
+    }
 
     const addFile = (e) => {
         if (e.target.files[0]) {
@@ -29,6 +33,7 @@ function AudioPlayer() {
             audio.addEventListener("loadedmetadata", ()=>{setAudioLength(audio.duration)})
             audio.addEventListener('timeupdate', (event) => {
                 setAudioTime(audio.currentTime);
+                setProgress(audio.currentTime / audio.duration * 100 )
             });
 
             setAudioFile(audio);
@@ -66,6 +71,13 @@ function AudioPlayer() {
                 type="file"
                 onChange={e=>addFile(e)}
             />
+            <div className="seekerBar__container">
+                <div className="seekerBar__gray">
+                    <div style={barStyle} className="seekerBar__progress"></div>
+                </div>
+
+            </div>
+
             <div>{audioLength}</div>
             <div>{audioTime}</div>
 
