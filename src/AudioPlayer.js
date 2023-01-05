@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react'
+import "./AudioPlayer.css"
 
 function AudioPlayer() {
     const [audioFile, setAudioFile] = useState({})
@@ -14,7 +15,7 @@ function AudioPlayer() {
         var reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function () {
-            setAudioFile(reader.result);
+            setAudioFile(new Audio(reader.result));
         };
         reader.onerror = function (error) {
             console.log('Error: ', error);
@@ -22,8 +23,15 @@ function AudioPlayer() {
     }
 
     function playFile(){
-        const snd = new Audio(audioFile)
-        snd.play()
+        audioFile.play()
+        console.log(audioFile.duration)
+        // const snd = new Audio(audioFile)
+        // snd.play()
+    }
+    function pauseFile(){
+        audioFile.pause()
+        // const snd = new Audio(audioFile)
+        // snd.play()
     }
 
     useEffect(()=>{
@@ -37,9 +45,15 @@ function AudioPlayer() {
                 type="file"
                 onChange={e=>addFile(e)}
             />
+
             <button
             onClick={()=>{playFile()}}
-            >click me</button>
+            >play
+            </button>
+            <button
+            onClick={()=>{pauseFile()}}
+            >pause
+            </button>
         </div>
     )
 }
