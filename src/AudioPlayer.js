@@ -6,6 +6,7 @@ function AudioPlayer() {
 
     const [audioFile, setAudioFile] = useState({})
     const [audioLength, setAudioLength] = useState("")
+    const [audioTime, setAudioTime] = useState("")
 
 
     const addFile = (e) => {
@@ -16,17 +17,19 @@ function AudioPlayer() {
     };
 
     useEffect(()=>{
-        console.log(audioFile)
-    },[audioFile])
+        console.log(audioLength)
+    },[audioLength])
 
     function getBase64(file) {
         var reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function () {
             const audio = new Audio(reader.result)
-            audio.addEventListener("loadedmetadata", ()=>{console.log(audio.duration)})
-            
+            audio.addEventListener("loadedmetadata", ()=>{setAudioLength(audio.duration)})
             setAudioFile(audio);
+            audio.addEventListener('timeupdate', (event) => {
+                setAudioTime(audio.currentTime);
+            });
         };
         reader.onerror = function (error) {
             console.log('Error: ', error);
@@ -39,8 +42,8 @@ function AudioPlayer() {
 
     function playFile(){
         audioFile.play()
-
     }
+
     function pauseFile(){
         audioFile.pause()
     }
@@ -55,10 +58,7 @@ function AudioPlayer() {
                 onChange={e=>addFile(e)}
             />
             <div>{audioLength}</div>
-
-            {}
-
-
+            <div>{audioTime}</div>
 
             <button
             onClick={()=>{playFile()}}
