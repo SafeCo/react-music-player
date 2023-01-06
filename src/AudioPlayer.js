@@ -11,7 +11,7 @@ function AudioPlayer() {
     const [progress, setProgress] = useState("")
 
     const barStyle = {
-        width : progress+ "%"
+        width : progress+ "%",
     }
 
     const addFile = (e) => {
@@ -52,6 +52,10 @@ function AudioPlayer() {
         audioFile.currentTime = divprogress / 100 * audioLength
     }
 
+    const checkTime = ()=>{
+        console.log(" working")
+    }
+
 
 
 
@@ -70,6 +74,25 @@ function AudioPlayer() {
     function minusTen(){
         audioFile.currentTime= audioTime - 10
     }
+
+
+    function volumeUp(){
+        if(audioFile.volume === 1){
+            return
+        }else{
+            audioFile.volume = (audioFile.volume.toFixed(2) * 100 + 0.1.toFixed(2) * 100) / 100 
+        }
+    }
+
+    function volumeDown(){
+        console.log(audioFile.volume)
+        if(audioFile.volume === 0){
+            return
+        }else{
+            audioFile.volume = (audioFile.volume.toFixed(2) * 100 - 0.1.toFixed(2) * 100) / 100 
+        }
+
+    }
     
 
     return (
@@ -80,8 +103,10 @@ function AudioPlayer() {
                 onChange={e=>addFile(e)}
             />
             <div className="seekerBar__container">
-                <div ref={clickRef} onClick={checkWidth} className="seekerBar__gray">
-                    <div style={barStyle} className="seekerBar__progress"></div>
+                <div ref={clickRef} onMouseEnter={checkTime} onClick={checkWidth} className="seekerBar__gray">
+                    <div style={barStyle} className="seekerBar__progress">
+                        <div className="seekerBar__ball"></div>
+                    </div>
                 </div>
 
             </div>
@@ -108,6 +133,16 @@ function AudioPlayer() {
             <button
             onClick={()=>{minusTen()}}
             > - 10
+            </button>
+
+            <button
+            onClick={()=>{volumeUp()}}
+            > volume up
+            </button>
+
+            <button
+            onClick={()=>{volumeDown()}}
+            > volume down
             </button>
 
         </div>
