@@ -5,18 +5,29 @@
 }
 
 .seekerBar__gray{
-    position: relative;
+    cursor: pointer;
     border: solid blue 1px;
     background-color: gray;
     width: 200px;
     height: 30px;
 }
 .seekerBar__progress{
-    position: absolute;
+    position: relative;
     background-color: green;
-    height: 20px;
-    z-index: 1;
+    height: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    transition-property: height;
+    transition-duration: 0.1s;
 }
 
+/* .seekerBar__ball{
+    position: absolute;
+    background-color: red;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+} */
 
 
