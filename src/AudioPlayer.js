@@ -11,9 +11,17 @@ function AudioPlayer() {
     const [audioLength, setAudioLength] = useState("")
     const [audioTime, setAudioTime] = useState("")
     const [progress, setProgress] = useState("")
+    const [volume, setVolume] = useState("")
 
     const barStyle = {
-        width : progress+ "%",
+        width : progress + "%",
+        backgroundColor: "green",
+
+    }
+    const volumeStyle = {
+        width : volume + "%",
+        backgroundColor: "red",
+
     }
 
     const addFile = (e) => {
@@ -61,14 +69,15 @@ function AudioPlayer() {
             const offset = e.nativeEvent.offsetX
             const divprogress = offset / width * 100;
             audioFile.currentTime = divprogress / 100 * audioLength
+            
         }else if( name === "volumeSeeker"){
             let width = volumeRef.current.clientWidth
             const offset = e.nativeEvent.offsetX
             const divprogress = offset / width * 100;
+            const vol =  (divprogress / 100).toFixed(2)
 
-            // audioFile.volume = (audioFile.volume.toFixed(2) * 100 + 0.1.toFixed(2) * 100) / 100 
-            console.log( divprogress / 100 * 1)
-            audioFile.volume = divprogress / 100 * 1
+            setVolume(divprogress)
+            audioFile.volume = vol
         }
         
     }
@@ -130,7 +139,7 @@ function AudioPlayer() {
                     </div>
                 </div>
                 <div ref={volumeRef} data-name="volumeSeeker"  onClick={checkWidth} className="seekerBar__gray">
-                    <div style={barStyle} className="seekerBar__progress">
+                    <div style={volumeStyle} className="seekerBar__progress">
                         <div className="seekerBar__ball"></div>
                     </div>
                 </div>
