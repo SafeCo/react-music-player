@@ -4,6 +4,8 @@ import "./AudioPlayer.css"
 function AudioPlayer() {
 
     const clickRef = useRef()
+    const volumeRef = useRef()
+
 
     const [audioFile, setAudioFile] = useState({})
     const [audioLength, setAudioLength] = useState("")
@@ -21,9 +23,9 @@ function AudioPlayer() {
         }
     };
 
-    useEffect(()=>{
-        console.log(audioLength)
-    },[audioLength])
+    // useEffect(()=>{
+    //     console.log(audioLength)
+    // },[audioLength])
 
     function getBase64(file) {
         var reader = new FileReader();
@@ -45,15 +47,34 @@ function AudioPlayer() {
         };
     }
 
+    // const checkWidth = (e)=>{
+    //     let width = clickRef.current.clientWidth
+    //     const offset = e.nativeEvent.offsetX
+    //     const divprogress = offset / width * 100;
+    //     audioFile.currentTime = divprogress / 100 * audioLength
+    // }
+
     const checkWidth = (e)=>{
-        let width = clickRef.current.clientWidth
-        const offset = e.nativeEvent.offsetX
-        const divprogress = offset / width * 100;
-        audioFile.currentTime = divprogress / 100 * audioLength
+        const name = e.currentTarget.getAttribute("data-name")
+        if (name === "timeSeeker"){
+            let width = clickRef.current.clientWidth
+            const offset = e.nativeEvent.offsetX
+            const divprogress = offset / width * 100;
+            audioFile.currentTime = divprogress / 100 * audioLength
+        }else if( name === "volumeSeeker"){
+            let width = volumeRef.current.clientWidth
+            const offset = e.nativeEvent.offsetX
+            const divprogress = offset / width * 100;
+
+            // audioFile.volume = (audioFile.volume.toFixed(2) * 100 + 0.1.toFixed(2) * 100) / 100 
+            console.log( divprogress / 100 * 1)
+            audioFile.volume = divprogress / 100 * 1
+        }
+        
     }
 
     const checkTime = ()=>{
-        console.log(" working")
+        // console.log(" working")
     }
 
 
@@ -103,7 +124,12 @@ function AudioPlayer() {
                 onChange={e=>addFile(e)}
             />
             <div className="seekerBar__container">
-                <div ref={clickRef} onMouseEnter={checkTime} onClick={checkWidth} className="seekerBar__gray">
+                <div ref={clickRef} data-name="timeSeeker" onMouseEnter={checkTime} onClick={checkWidth} className="seekerBar__gray">
+                    <div style={barStyle} className="seekerBar__progress">
+                        <div className="seekerBar__ball"></div>
+                    </div>
+                </div>
+                <div ref={volumeRef} data-name="volumeSeeker"  onClick={checkWidth} className="seekerBar__gray">
                     <div style={barStyle} className="seekerBar__progress">
                         <div className="seekerBar__ball"></div>
                     </div>
