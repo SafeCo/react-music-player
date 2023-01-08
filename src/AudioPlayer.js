@@ -12,6 +12,8 @@ function AudioPlayer() {
     const [audioTime, setAudioTime] = useState("")
     const [progress, setProgress] = useState("")
     const [volume, setVolume] = useState("")
+    const [cursorPosition, setCursorPosition] = useState({ left: 0 })
+
 
     const barStyle = {
         width : progress + "%",
@@ -24,6 +26,7 @@ function AudioPlayer() {
 
     }
 
+   
     const addFile = (e) => {
         if (e.target.files[0]) {
             // setAudioFile(URL.createObjectURL(e.target.files[0]));
@@ -82,9 +85,17 @@ function AudioPlayer() {
         
     }
 
-    const checkTime = ()=>{
-        // console.log(" working")
+    const checkTime = (e)=>{
+        let width = clickRef.current.clientWidth
+        const offset = e.nativeEvent.offsetX
+        const divprogress = offset / width * 100;
+        const time = divprogress / 100 * audioLength
+        console.log(Math.floor(time))
+        setCursorPosition({ left: e.screenX });
+
     }
+
+
 
 
 
@@ -133,9 +144,10 @@ function AudioPlayer() {
                 onChange={e=>addFile(e)}
             />
             <div className="seekerBar__container">
-                <div ref={clickRef} data-name="timeSeeker" onMouseEnter={checkTime} onClick={checkWidth} className="seekerBar__gray">
+                <div ref={clickRef} data-name="timeSeeker" onMouseMove={(e)=>checkTime(e)} onClick={checkWidth} className="seekerBar__gray">
                     <div style={barStyle} className="seekerBar__progress">
                         <div className="seekerBar__ball"></div>
+                        <div style={cursorPosition} className="seekerBar__time"></div>
                     </div>
                 </div>
                 <div ref={volumeRef} data-name="volumeSeeker"  onClick={checkWidth} className="seekerBar__gray">
@@ -143,7 +155,6 @@ function AudioPlayer() {
                         <div className="seekerBar__ball"></div>
                     </div>
                 </div>
-
             </div>
 
             <div>{audioLength}</div>

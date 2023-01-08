@@ -17,9 +17,19 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    transition-property: height;
-    transition-duration: 0.1s;
 }
+
+.seekerBar__time{
+    position: absolute;
+    border: solid blue 1px;
+    width: 20px;
+    height: 20px;
+    transform: translate(-50%, -50%);
+    bottom: 0;
+
+}
+
+
 
 /* .seekerBar__ball{
     position: absolute;
