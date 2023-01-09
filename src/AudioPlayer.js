@@ -10,6 +10,9 @@ function AudioPlayer() {
     const [audioFile, setAudioFile] = useState({})
     const [audioLength, setAudioLength] = useState("")
     const [audioTime, setAudioTime] = useState("")
+
+    const [seekerTime, setSeekerTime] = useState("")
+
     const [progress, setProgress] = useState("")
     const [volume, setVolume] = useState("")
     const [cursorPosition, setCursorPosition] = useState({ left: 0 })
@@ -90,9 +93,31 @@ function AudioPlayer() {
         const offset = e.nativeEvent.offsetX
         const divprogress = offset / width * 100;
         const time = divprogress / 100 * audioLength
-        console.log(Math.floor(time))
+        // console.log(toHoursAndMinutes(Math.floor(time)))
+        setSeekerTime(toHoursAndMinutes(Math.floor(time)))
         setCursorPosition({ left: e.screenX });
 
+    }
+
+    function toHoursAndMinutes(totalSeconds) {
+        const totalMinutes = Math.floor(totalSeconds / 60);
+
+        const seconds = (totalSeconds % 60).toLocaleString('en-US', {
+            minimumIntegerDigits: 2,
+            useGrouping: false
+        });
+        const hours = (Math.floor(totalMinutes / 60)).toLocaleString('en-US', {
+            minimumIntegerDigits: 2,
+            useGrouping: false
+        });
+        const minutes = (totalMinutes % 60).toLocaleString('en-US', {
+            minimumIntegerDigits: 2,
+            useGrouping: false
+        });
+
+        const time = hours + ":" + minutes + ":" + seconds
+        
+        return time ;
     }
 
 
@@ -147,7 +172,7 @@ function AudioPlayer() {
                 <div ref={clickRef} data-name="timeSeeker" onMouseMove={(e)=>checkTime(e)} onClick={checkWidth} className="seekerBar__gray">
                     <div style={barStyle} className="seekerBar__progress">
                         <div className="seekerBar__ball"></div>
-                        <div style={cursorPosition} className="seekerBar__time"></div>
+                        <div style={cursorPosition} className="seekerBar__time">{seekerTime}</div>
                     </div>
                 </div>
                 <div ref={volumeRef} data-name="volumeSeeker"  onClick={checkWidth} className="seekerBar__gray">
