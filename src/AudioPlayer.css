@@ -1,16 +1,23 @@
-.seekerBar__container{
+.audioPlayer__container{
+    border: solid red 2px;
+}
+
+
+
+
+.volumeBar__container{
     border: solid red 1px;
     height: 100px;
 
 }
 
-.seekerBar__gray{
+.volumeBar__gray{
     cursor: pointer;
     background-color: gray;
     width: 200px;
     height: 30px;
 }
-.seekerBar__progress{
+.volumeBar__progress{
     position: relative;
     /* background-color: green; */
     height: 10px;
@@ -19,25 +26,8 @@
     justify-content: flex-end;
 }
 
-.seekerBar__time{
-    position: absolute;
-    border: solid blue 1px;
-    background-color: white;
-    height: 20px;
-    transform: translate(-50%, -50%);
-    bottom: 0;
-
-}
 
 
-
-/* .seekerBar__ball{
-    position: absolute;
-    background-color: red;
-    height: 15px;
-    width: 15px;
-    border-radius: 50%;
-} */
 
 
 .audioTime__container{

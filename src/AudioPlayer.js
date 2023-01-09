@@ -1,9 +1,9 @@
 import {useState, useEffect, useRef} from 'react'
 import "./AudioPlayer.css"
+import SeekerBar from './SeekerBar'
 
 function AudioPlayer() {
 
-    const clickRef = useRef()
     const volumeRef = useRef()
 
 
@@ -11,18 +11,11 @@ function AudioPlayer() {
     const [audioLength, setAudioLength] = useState("")
     const [audioTime, setAudioTime] = useState("")
 
-    const [seekerTime, setSeekerTime] = useState("")
 
     const [progress, setProgress] = useState("")
     const [volume, setVolume] = useState("")
-    const [cursorPosition, setCursorPosition] = useState({ left: 0 })
 
 
-    const barStyle = {
-        width : progress + "%",
-        backgroundColor: "green",
-
-    }
     const volumeStyle = {
         width : volume + "%",
         backgroundColor: "red",
@@ -36,10 +29,6 @@ function AudioPlayer() {
             getBase64(e.target.files[0]);
         }
     };
-
-    // useEffect(()=>{
-    //     console.log(audioLength)
-    // },[audioLength])
 
     function getBase64(file) {
         var reader = new FileReader();
@@ -61,22 +50,10 @@ function AudioPlayer() {
         };
     }
 
-    // const checkWidth = (e)=>{
-    //     let width = clickRef.current.clientWidth
-    //     const offset = e.nativeEvent.offsetX
-    //     const divprogress = offset / width * 100;
-    //     audioFile.currentTime = divprogress / 100 * audioLength
-    // }
 
     const checkWidth = (e)=>{
         const name = e.currentTarget.getAttribute("data-name")
-        if (name === "timeSeeker"){
-            let width = clickRef.current.clientWidth
-            const offset = e.nativeEvent.offsetX
-            const divprogress = offset / width * 100;
-            audioFile.currentTime = divprogress / 100 * audioLength
-            
-        }else if( name === "volumeSeeker"){
+        if( name === "volumeSeeker"){
             let width = volumeRef.current.clientWidth
             const offset = e.nativeEvent.offsetX
             const divprogress = offset / width * 100;
@@ -87,18 +64,6 @@ function AudioPlayer() {
         }
         
     }
-
-    const checkTime = (e)=>{
-        let width = clickRef.current.clientWidth
-        const offset = e.nativeEvent.offsetX
-        const divprogress = offset / width * 100;
-        const time = divprogress / 100 * audioLength
-        // console.log(toHoursAndMinutes(Math.floor(time)))
-        setSeekerTime(toHoursAndMinutes(Math.floor(time)))
-        setCursorPosition({ left: e.screenX });
-
-    }
-
     function toHoursAndMinutes(totalSeconds) {
         const totalMinutes = Math.floor(totalSeconds / 60);
 
@@ -119,7 +84,6 @@ function AudioPlayer() {
 
         return time ;
     }
-
 
 
 
@@ -162,28 +126,34 @@ function AudioPlayer() {
     
 
     return (
-        <div>
+        <div className="audioPlayer__container">
             <h1>Working</h1>
             <input
                 type="file"
                 onChange={e=>addFile(e)}
             />
-            <div className="seekerBar__container">
-                <div ref={clickRef} data-name="timeSeeker" onMouseMove={(e)=>checkTime(e)} onClick={checkWidth} className="seekerBar__gray">
+
+            <SeekerBar 
+                toHoursAndMinutes={toHoursAndMinutes} 
+                audioFile={audioFile}
+                audioLength={audioLength}
+                progress={progress}
+            />
+            <div className="volumeBar__container">
+                {/* <div ref={clickRef} data-name="timeSeeker" onMouseMove={(e)=>checkTime(e)} onClick={checkWidth} className="seekerBar__gray">
                     <div style={barStyle} className="seekerBar__progress">
                         <div className="seekerBar__ball"></div>
                         <div style={cursorPosition} className="seekerBar__time">{seekerTime}</div>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="audioTime__container">
                     <div>{toHoursAndMinutes(Math.floor(audioTime)) + " / "}</div>
                     <div>{toHoursAndMinutes(Math.floor(audioLength))}</div>
                 </div>
 
-                <div ref={volumeRef} data-name="volumeSeeker"  onClick={checkWidth} className="seekerBar__gray">
-                    <div style={volumeStyle} className="seekerBar__progress">
-                        <div className="seekerBar__ball"></div>
+                <div ref={volumeRef} data-name="volumeSeeker"  onClick={checkWidth} className="volumeBar__gray">
+                    <div style={volumeStyle} className="volumeBar__progress">
                     </div>
                 </div>
             </div>
