@@ -40,3 +40,6 @@
 } */
 
 
+.audioTime__container{
+    display: flex;
+}

@@ -116,7 +116,7 @@ function AudioPlayer() {
         });
 
         const time = hours + ":" + minutes + ":" + seconds
-        
+
         return time ;
     }
 
@@ -175,15 +175,18 @@ function AudioPlayer() {
                         <div style={cursorPosition} className="seekerBar__time">{seekerTime}</div>
                     </div>
                 </div>
+
+                <div className="audioTime__container">
+                    <div>{toHoursAndMinutes(Math.floor(audioTime)) + " / "}</div>
+                    <div>{toHoursAndMinutes(Math.floor(audioLength))}</div>
+                </div>
+
                 <div ref={volumeRef} data-name="volumeSeeker"  onClick={checkWidth} className="seekerBar__gray">
                     <div style={volumeStyle} className="seekerBar__progress">
                         <div className="seekerBar__ball"></div>
                     </div>
                 </div>
             </div>
-
-            <div>{audioLength}</div>
-            <div>{audioTime}</div>
 
             <button
             onClick={()=>{playFile()}}
