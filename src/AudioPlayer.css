@@ -1,5 +1,10 @@
 .audioPlayer__container{
     border: solid red 2px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -7,8 +12,6 @@
 
 .volumeBar__container{
     border: solid red 1px;
-    height: 100px;
-
 }
 
 .volumeBar__gray{

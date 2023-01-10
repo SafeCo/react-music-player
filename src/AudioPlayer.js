@@ -1,6 +1,11 @@
-import {useState, useEffect, useRef} from 'react'
+import {useState, useRef} from 'react'
 import "./AudioPlayer.css"
 import SeekerBar from './SeekerBar'
+import { BsFillPlayCircleFill } from "react-icons/bs";
+import { BsFillPauseCircleFill } from "react-icons/bs";
+import { GrForwardTen } from "react-icons/gr"
+import { GrBackTen } from "react-icons/gr"
+
 
 function AudioPlayer() {
 
@@ -11,7 +16,7 @@ function AudioPlayer() {
     const [audioLength, setAudioLength] = useState("")
     const [audioTime, setAudioTime] = useState("")
 
-
+    const [isPlaying, setIsPlaying] = useState(false)
     const [progress, setProgress] = useState("")
     const [volume, setVolume] = useState("")
 
@@ -22,7 +27,7 @@ function AudioPlayer() {
 
     }
 
-   
+
     const addFile = (e) => {
         if (e.target.files[0]) {
             // setAudioFile(URL.createObjectURL(e.target.files[0]));
@@ -92,10 +97,12 @@ function AudioPlayer() {
 
     function playFile(){
         audioFile.play()
+        setIsPlaying(!isPlaying)
     }
 
     function pauseFile(){
         audioFile.pause()
+        setIsPlaying(!isPlaying)
     }
 
     function addTen(){
@@ -106,25 +113,6 @@ function AudioPlayer() {
     }
 
 
-    function volumeUp(){
-        if(audioFile.volume === 1){
-            return
-        }else{
-            audioFile.volume = (audioFile.volume.toFixed(2) * 100 + 0.1.toFixed(2) * 100) / 100 
-        }
-    }
-
-    function volumeDown(){
-        console.log(audioFile.volume)
-        if(audioFile.volume === 0){
-            return
-        }else{
-            audioFile.volume = (audioFile.volume.toFixed(2) * 100 - 0.1.toFixed(2) * 100) / 100 
-        }
-
-    }
-    
-
     return (
         <div className="audioPlayer__container">
             <h1>Working</h1>
@@ -133,61 +121,61 @@ function AudioPlayer() {
                 onChange={e=>addFile(e)}
             />
 
-            <SeekerBar 
-                toHoursAndMinutes={toHoursAndMinutes} 
-                audioFile={audioFile}
-                audioLength={audioLength}
-                progress={progress}
-            />
-            <div className="volumeBar__container">
-                {/* <div ref={clickRef} data-name="timeSeeker" onMouseMove={(e)=>checkTime(e)} onClick={checkWidth} className="seekerBar__gray">
-                    <div style={barStyle} className="seekerBar__progress">
-                        <div className="seekerBar__ball"></div>
-                        <div style={cursorPosition} className="seekerBar__time">{seekerTime}</div>
-                    </div>
-                </div> */}
-
-                <div className="audioTime__container">
-                    <div>{toHoursAndMinutes(Math.floor(audioTime)) + " / "}</div>
+            <div className="audioTime__container">
+            
+                    <div>{toHoursAndMinutes(Math.floor(audioTime))}</div>
+                    <SeekerBar 
+                        toHoursAndMinutes={toHoursAndMinutes} 
+                        audioFile={audioFile}
+                        audioLength={audioLength}
+                        progress={progress}
+                    />
                     <div>{toHoursAndMinutes(Math.floor(audioLength))}</div>
-                </div>
+            </div>
 
+            <div className="audioPlayer__button-container">
+                <button
+                onClick={()=>{minusTen()}}
+                >
+                    <GrBackTen/>
+                </button>
+
+                { isPlaying?
+                    (
+                        <button
+                        className="audioPlayer__pause-button"
+                        onClick={()=>{pauseFile()}}
+                        >
+                            <BsFillPauseCircleFill/>
+                        </button>
+                    ) :
+                    (   
+                        <button
+                        className="audioPlayer__play-button"
+                        onClick={()=>{playFile()}}
+                        >
+                            <BsFillPlayCircleFill />
+                        </button>
+                    )
+                }
+
+                <button
+                onClick={()=>{addTen()}}
+                > 
+                    <GrForwardTen/>
+                </button>
+
+                
+            </div>
+
+
+
+            <div className="volumeBar__container">
                 <div ref={volumeRef} data-name="volumeSeeker"  onClick={checkWidth} className="volumeBar__gray">
                     <div style={volumeStyle} className="volumeBar__progress">
                     </div>
                 </div>
             </div>
-
-            <button
-            onClick={()=>{playFile()}}
-            >play
-            </button>
-
-
-            <button
-            onClick={()=>{pauseFile()}}
-            >pause
-            </button>
-
-            <button
-            onClick={()=>{addTen()}}
-            > + 10
-            </button>
-
-            <button
-            onClick={()=>{minusTen()}}
-            > - 10
-            </button>
-
-            <button
-            onClick={()=>{volumeUp()}}
-            > volume up
-            </button>
-
-            <button
-            onClick={()=>{volumeDown()}}
-            > volume down
-            </button>
 
         </div>
     )

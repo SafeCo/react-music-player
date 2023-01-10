@@ -1,10 +1,10 @@
 
-import {useState,  useRef, useEffect} from 'react'
+import {useState,  useRef} from 'react'
 import "./SeekerBar.css"
 
 function SeekerBar({toHoursAndMinutes, audioFile, audioLength, progress}) {
 
-    const clickRef = useRef()
+    const seekerRef = useRef()
 
     const [cursorPosition, setCursorPosition] = useState({ left: 0 })
     const [seekerTime, setSeekerTime] = useState("")
@@ -13,34 +13,32 @@ function SeekerBar({toHoursAndMinutes, audioFile, audioLength, progress}) {
     const barStyle = {
         width : progress + "%",
         backgroundColor: "green",
-
     }
 
     const checkWidth = (e)=>{
-        let width = clickRef.current.clientWidth
+        let width = seekerRef.current.clientWidth
         const offset = e.nativeEvent.offsetX
         const divprogress = offset / width * 100;
         audioFile.currentTime = divprogress / 100 * audioLength
     }
 
     const checkTime = (e)=>{
-        let width = clickRef.current.clientWidth
+        let width = seekerRef.current.clientWidth
         const offset = e.nativeEvent.offsetX
         const divprogress = offset / width * 100;
         const time = divprogress / 100 * audioLength
         setSeekerTime(toHoursAndMinutes(Math.floor(time)))
-        setCursorPosition({ left: e.clientX});
 
+        let bounds = seekerRef.current.getBoundingClientRect()
+        let x = e.clientX - bounds.left;
+        setCursorPosition({ left: x});
     }
-    useEffect(()=>{
-        console.log(isHover)
-    },[isHover])
 
     return (
         <div className="seekerBar__container">
                 <div 
                     className="seekerBar__gray"
-                    ref={clickRef} 
+                    ref={seekerRef} 
                     data-name="timeSeeker" 
                     onMouseEnter={()=>{setIsHover(true)}} 
                     onMouseLeave={()=>{setIsHover(false)}} 
