@@ -3,8 +3,6 @@ import "./AudioPlayer.css"
 import SeekerBar from './SeekerBar'
 import { BsFillPlayCircleFill } from "react-icons/bs";
 import { BsFillPauseCircleFill } from "react-icons/bs";
-import { BsFillVolumeUpFill } from "react-icons/bs";
-import {BsVolumeMuteFill} from "react-icons/bs";
 import {BiUpload} from "react-icons/bi"
 import {MdOutlineForward5} from "react-icons/md"
 import {MdOutlineReplay5} from "react-icons/md"
@@ -66,9 +64,7 @@ function AudioPlayer() {
 
 
 
-    useEffect(()=>{
-        audioFile.volume = (volume / 100).toFixed(2)
-    },[volume])
+    
 
     function toHoursAndMinutes(totalSeconds) {
         const totalMinutes = Math.floor(totalSeconds / 60);
@@ -192,30 +188,13 @@ function AudioPlayer() {
 
                             
                         </div>
-                        <VolumeBar audioFile={audioFile} iconStyle={iconStyle} volumeStyle={volumeStyle}
-                        volume={volume} setVolume={setVolume}
-                         />
-
-                        {/* <div className="volumeBar__container">
-                            { volume === 0 ?
-                                (<button 
-                                className="noStyleButton"
-                                onClick={()=>{setVolume(50)}}
-                                >
-                                    <BsVolumeMuteFill style={iconStyle}/>
-                                </button>):
-                                (<button 
-                                className="noStyleButton"
-                                onClick={()=>{setVolume(0)}}
-                                >
-                                    <BsFillVolumeUpFill style={iconStyle}/>
-                                </button>)                                
-                            }
-
-                            <div ref={volumeRef} data-name="volumeSeeker"  onClick={checkWidth} className="volumeBar__gray">
-                                <div style={volumeStyle} className="volumeBar__progress"></div>
-                            </div>
-                        </div> */}
+                        <VolumeBar 
+                            audioFile={audioFile} 
+                            iconStyle={iconStyle} 
+                            volumeStyle={volumeStyle}
+                            volume={volume} 
+                            setVolume={setVolume}
+                        />
 
             </div>
 

@@ -39,7 +39,6 @@ function SeekerBar({toHoursAndMinutes, audioFile, audioLength, progress}) {
                 <div 
                     className="seekerBar__gray"
                     ref={seekerRef} 
-                    data-name="timeSeeker" 
                     onMouseEnter={()=>{setIsHover(true)}} 
                     onMouseLeave={()=>{setIsHover(false)}} 
                     onMouseMove={(e)=>checkTime(e)} 
