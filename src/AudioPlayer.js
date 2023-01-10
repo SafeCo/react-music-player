@@ -1,8 +1,10 @@
-import {useState, useRef} from 'react'
+import {useState, useRef, useEffect} from 'react'
 import "./AudioPlayer.css"
 import SeekerBar from './SeekerBar'
 import { BsFillPlayCircleFill } from "react-icons/bs";
 import { BsFillPauseCircleFill } from "react-icons/bs";
+import { BsFillVolumeUpFill } from "react-icons/bs";
+import {BsVolumeMuteFill} from "react-icons/bs";
 import { GrForwardTen } from "react-icons/gr"
 import { GrBackTen } from "react-icons/gr"
 import speaker from "./speaker.svg"
@@ -10,6 +12,7 @@ import speaker from "./speaker.svg"
 function AudioPlayer() {
 
     const volumeRef = useRef()
+    const inputRef = useRef()
 
     const [audioName, setAudioName] = useState("")
     const [audioFile, setAudioFile] = useState({})
@@ -69,8 +72,12 @@ function AudioPlayer() {
             setVolume(divprogress)
             audioFile.volume = vol
         }
-        
     }
+
+    useEffect(()=>{
+        audioFile.volume = (volume / 100).toFixed(2)
+    },[volume])
+
     function toHoursAndMinutes(totalSeconds) {
         const totalMinutes = Math.floor(totalSeconds / 60);
 
@@ -127,61 +134,85 @@ function AudioPlayer() {
             <div className="audioTime__container">
             
                     <div>{toHoursAndMinutes(Math.floor(audioTime))}</div>
-                    <SeekerBar 
-                        toHoursAndMinutes={toHoursAndMinutes} 
-                        audioFile={audioFile}
-                        audioLength={audioLength}
-                        progress={progress}
-                    />
-                    <div>{toHoursAndMinutes(Math.floor(audioLength))}</div>
-            </div>
-
-            <div className="audioPlayer__button-container">
-                <button
-                onClick={()=>{minusTen()}}
-                >
-                    <GrBackTen/>
-                </button>
-
-                { isPlaying?
-                    (
-                        <button
-                        className="audioPlayer__pause-button"
-                        onClick={()=>{pauseFile()}}
-                        >
-                            <BsFillPauseCircleFill/>
-                        </button>
-                    ) :
-                    (   
-                        <button
-                        className="audioPlayer__play-button"
-                        onClick={()=>{playFile()}}
-                        >
-                            <BsFillPlayCircleFill />
-                        </button>
-                    )
-                }
-
-                <button
-                onClick={()=>{addTen()}}
-                > 
-                    <GrForwardTen/>
-                </button>
-
-                
-            </div>
-
-            <input
-                type="file"
-                onChange={e=>addFile(e)}
-            />
-
-            <div className="volumeBar__container">
-                <div ref={volumeRef} data-name="volumeSeeker"  onClick={checkWidth} className="volumeBar__gray">
-                    <div style={volumeStyle} className="volumeBar__progress">
+                            <SeekerBar 
+                                toHoursAndMinutes={toHoursAndMinutes} 
+                                audioFile={audioFile}
+                                audioLength={audioLength}
+                                progress={progress}
+                            />
+                            <div>{toHoursAndMinutes(Math.floor(audioLength))}</div>
                     </div>
-                </div>
+
+                    <div className="audioPlayer__controls-container">
+                        
+                        <div className="uploadButton__container" >
+                            <button
+                            onClick={()=>{inputRef.current.click()}}
+                            >
+                                Upload
+                            </button>
+
+                            <input
+                                style={{display: "none"}}
+                                ref={inputRef}
+                                type="file"
+                                onChange={e=>addFile(e)}
+                            />
+                        </div>
+
+                        <div className="audioPlayer__button-container">
+                            <button
+                            onClick={()=>{minusTen()}}
+                            >
+                                <GrBackTen/>
+                            </button>
+
+                            { isPlaying?
+                                (
+                                    <button
+                                    className="audioPlayer__pause-button"
+                                    onClick={()=>{pauseFile()}}
+                                    >
+                                        <BsFillPauseCircleFill/>
+                                    </button>
+                                ) :
+                                (   
+                                    <button
+                                    className="audioPlayer__play-button"
+                                    onClick={()=>{playFile()}}
+                                    >
+                                        <BsFillPlayCircleFill />
+                                    </button>
+                                )
+                            }
+
+                            <button
+                            onClick={()=>{addTen()}}
+                            > 
+                                <GrForwardTen/>
+                            </button>
+
+                            
+                        </div>
+                        
+                        <div className="volumeBar__container">
+                            { volume === 0 ?
+                                (<button onClick={()=>{setVolume(50)}}>
+                                    <BsVolumeMuteFill/>
+                                </button>):
+                                (<button onClick={()=>{setVolume(0)}}>
+                                    <BsFillVolumeUpFill/>
+                                </button>)                                
+                            }
+                            <div ref={volumeRef} data-name="volumeSeeker"  onClick={checkWidth} className="volumeBar__gray">
+                                <div style={volumeStyle} className="volumeBar__progress">
+                                </div>
+                            </div>
+                        </div>
+
             </div>
+
+         
 
         </div>
     )

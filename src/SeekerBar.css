@@ -1,17 +1,23 @@
 .seekerBar__container{
-    border: solid red 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+
 }
 
 .seekerBar__gray{
     cursor: pointer;
     background-color: white;
     width: 400px;
+    height: 10px;
     border-radius: 4px;
-    overflow: hidden;
 }
 .seekerBar__progress{
     position: relative;
     height: 10px;
+    border-radius: 4px;
+
 }
 
 

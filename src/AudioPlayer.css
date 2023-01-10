@@ -16,18 +16,55 @@
     align-items: center;
 }
 
+.audioPlayer__controls-container{
+    display: flex;
+    width: 100%;
+}
+
+.uploadButton__container{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex: 1 1 0;
+}
+
+.audioPlayer__button-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex: 1 1 0;
+}
+
+.volumeBar__container{
+    flex: 1 1 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 .volumeBar__container{
     border: solid red 1px;
+    display: flex;
+    align-items: center;
 }
 
 .volumeBar__gray{
     cursor: pointer;
     background-color: gray;
     width: 200px;
-    height: 30px;
+    height: 10px;
 }
 .volumeBar__progress{
     position: relative;
