@@ -7,6 +7,16 @@
     align-items: center;
     color: white;
 }
+.noStyleButton{
+    border: none;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin: 5px;
+}
+
 
 .audioPlayer__image{
     height: 300px;
@@ -37,6 +47,8 @@
 }
 
 .volumeBar__container{
+    display: flex;
+    align-content: center;
     flex: 1 1 0;
 }
 
@@ -55,7 +67,6 @@
 
 
 .volumeBar__container{
-    border: solid red 1px;
     display: flex;
     align-items: center;
 }

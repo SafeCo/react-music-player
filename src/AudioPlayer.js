@@ -5,8 +5,9 @@ import { BsFillPlayCircleFill } from "react-icons/bs";
 import { BsFillPauseCircleFill } from "react-icons/bs";
 import { BsFillVolumeUpFill } from "react-icons/bs";
 import {BsVolumeMuteFill} from "react-icons/bs";
-import { GrForwardTen } from "react-icons/gr"
-import { GrBackTen } from "react-icons/gr"
+import {BiUpload} from "react-icons/bi"
+import {MdOutlineForward5} from "react-icons/md"
+import {MdOutlineReplay5} from "react-icons/md"
 import speaker from "./speaker.svg"
 
 function AudioPlayer() {
@@ -28,6 +29,11 @@ function AudioPlayer() {
         width : volume + "%",
         backgroundColor: "red",
 
+    }
+
+    const iconStyle = {
+        color: "white",
+        fontSize: "2.5rem"
     }
 
 
@@ -114,11 +120,11 @@ function AudioPlayer() {
         setIsPlaying(!isPlaying)
     }
 
-    function addTen(){
-        audioFile.currentTime= audioTime + 10
+    function addFive(){
+        audioFile.currentTime= audioTime + 5
     }
-    function minusTen(){
-        audioFile.currentTime= audioTime - 10
+    function minusFive(){
+        audioFile.currentTime= audioTime - 5
     }
 
 
@@ -147,9 +153,10 @@ function AudioPlayer() {
                         
                         <div className="uploadButton__container" >
                             <button
+                            className="noStyleButton"
                             onClick={()=>{inputRef.current.click()}}
                             >
-                                Upload
+                                <BiUpload style={iconStyle}/> 
                             </button>
 
                             <input
@@ -162,34 +169,36 @@ function AudioPlayer() {
 
                         <div className="audioPlayer__button-container">
                             <button
-                            onClick={()=>{minusTen()}}
+                            className="noStyleButton"
+                            onClick={()=>{minusFive()}}
                             >
-                                <GrBackTen/>
+                                <MdOutlineReplay5 style={iconStyle} />
                             </button>
 
                             { isPlaying?
                                 (
                                     <button
-                                    className="audioPlayer__pause-button"
+                                    className="audioPlayer__pause-button noStyleButton"
                                     onClick={()=>{pauseFile()}}
                                     >
-                                        <BsFillPauseCircleFill/>
+                                        <BsFillPauseCircleFill style={iconStyle}/>
                                     </button>
                                 ) :
                                 (   
                                     <button
-                                    className="audioPlayer__play-button"
+                                    className="audioPlayer__play-button noStyleButton"
                                     onClick={()=>{playFile()}}
                                     >
-                                        <BsFillPlayCircleFill />
+                                        <BsFillPlayCircleFill style={iconStyle} />
                                     </button>
                                 )
                             }
 
                             <button
-                            onClick={()=>{addTen()}}
+                            className="noStyleButton"
+                            onClick={()=>{addFive()}}
                             > 
-                                <GrForwardTen/>
+                                <MdOutlineForward5 style={iconStyle} />
                             </button>
 
                             
@@ -197,11 +206,17 @@ function AudioPlayer() {
                         
                         <div className="volumeBar__container">
                             { volume === 0 ?
-                                (<button onClick={()=>{setVolume(50)}}>
-                                    <BsVolumeMuteFill/>
+                                (<button 
+                                className="noStyleButton"
+                                onClick={()=>{setVolume(50)}}
+                                >
+                                    <BsVolumeMuteFill style={iconStyle}/>
                                 </button>):
-                                (<button onClick={()=>{setVolume(0)}}>
-                                    <BsFillVolumeUpFill/>
+                                (<button 
+                                className="noStyleButton"
+                                onClick={()=>{setVolume(0)}}
+                                >
+                                    <BsFillVolumeUpFill style={iconStyle}/>
                                 </button>)                                
                             }
                             <div ref={volumeRef} data-name="volumeSeeker"  onClick={checkWidth} className="volumeBar__gray">
@@ -212,7 +227,6 @@ function AudioPlayer() {
 
             </div>
 
-         
 
         </div>
     )
