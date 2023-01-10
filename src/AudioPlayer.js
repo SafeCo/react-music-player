@@ -11,7 +11,7 @@ function AudioPlayer() {
 
     const volumeRef = useRef()
 
-
+    const [audioName, setAudioName] = useState("")
     const [audioFile, setAudioFile] = useState({})
     const [audioLength, setAudioLength] = useState("")
     const [audioTime, setAudioTime] = useState("")
@@ -31,6 +31,8 @@ function AudioPlayer() {
     const addFile = (e) => {
         if (e.target.files[0]) {
             // setAudioFile(URL.createObjectURL(e.target.files[0]));
+            const fileName = e.target.files[0].name.replace(/\.[^/.]+$/, "")
+            setAudioName(fileName)
             getBase64(e.target.files[0]);
         }
     };
@@ -115,11 +117,8 @@ function AudioPlayer() {
 
     return (
         <div className="audioPlayer__container">
-            <h1>Working</h1>
-            <input
-                type="file"
-                onChange={e=>addFile(e)}
-            />
+
+            {audioName}
 
             <div className="audioTime__container">
             
@@ -168,7 +167,10 @@ function AudioPlayer() {
                 
             </div>
 
-
+            <input
+                type="file"
+                onChange={e=>addFile(e)}
+            />
 
             <div className="volumeBar__container">
                 <div ref={volumeRef} data-name="volumeSeeker"  onClick={checkWidth} className="volumeBar__gray">
