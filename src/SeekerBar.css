@@ -4,9 +4,10 @@
 
 .seekerBar__gray{
     cursor: pointer;
-    background-color: gray;
+    background-color: white;
     width: 400px;
-    height: 30px;
+    border-radius: 4px;
+    overflow: hidden;
 }
 .seekerBar__progress{
     position: relative;
@@ -22,5 +23,6 @@
     background-color: white;
     height: 20px;
     transform: translate(-50%, -50%);
+    color: black;
 
 }

@@ -5,7 +5,7 @@ import { BsFillPlayCircleFill } from "react-icons/bs";
 import { BsFillPauseCircleFill } from "react-icons/bs";
 import { GrForwardTen } from "react-icons/gr"
 import { GrBackTen } from "react-icons/gr"
-
+import speaker from "./speaker.svg"
 
 function AudioPlayer() {
 
@@ -117,6 +117,10 @@ function AudioPlayer() {
 
     return (
         <div className="audioPlayer__container">
+
+            <div className="audioPlayer__image">
+                <img src={speaker} />
+            </div>
 
             {audioName}
 
