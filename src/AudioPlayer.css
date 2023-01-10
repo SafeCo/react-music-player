@@ -6,6 +6,7 @@
     justify-content: center;
     align-items: center;
     color: white;
+    font-family: sans-serif;
 }
 .noStyleButton{
     border: none;
@@ -24,6 +25,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.audioPlayer__name{
+    height: 20px;
 }
 
 .audioPlayer__controls-container{
@@ -46,11 +51,6 @@
     flex: 1 1 0;
 }
 
-.volumeBar__container{
-    display: flex;
-    align-content: center;
-    flex: 1 1 0;
-}
 
 
 
@@ -59,32 +59,6 @@
 
 
 
-
-
-
-
-
-
-
-.volumeBar__container{
-    display: flex;
-    align-items: center;
-}
-
-.volumeBar__gray{
-    cursor: pointer;
-    background-color: gray;
-    width: 200px;
-    height: 10px;
-}
-.volumeBar__progress{
-    position: relative;
-    /* background-color: green; */
-    height: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
 
 
 
@@ -92,4 +66,6 @@
 
 .audioTime__container{
     display: flex;
+    justify-content: center;
+    align-items: center;
 }

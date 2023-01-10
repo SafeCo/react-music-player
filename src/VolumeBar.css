@@ -1,0 +1,19 @@
+.volumeBar__container{
+    display: flex;
+    align-items: center;
+    flex: 1 1 0;
+}
+
+.volumeBar__gray{
+    cursor: pointer;
+    background-color: gray;
+    width: 200px;
+    height: 10px;
+    border-radius: 4px;
+}
+.volumeBar__progress{
+    position: relative;
+    background-color: white;
+    height: 10px;
+    border-radius: 4px;
+}

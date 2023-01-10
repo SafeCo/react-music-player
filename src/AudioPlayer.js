@@ -9,10 +9,10 @@ import {BiUpload} from "react-icons/bi"
 import {MdOutlineForward5} from "react-icons/md"
 import {MdOutlineReplay5} from "react-icons/md"
 import speaker from "./speaker.svg"
+import VolumeBar from './VolumeBar';
 
 function AudioPlayer() {
 
-    const volumeRef = useRef()
     const inputRef = useRef()
 
     const [audioName, setAudioName] = useState("")
@@ -27,8 +27,6 @@ function AudioPlayer() {
 
     const volumeStyle = {
         width : volume + "%",
-        backgroundColor: "red",
-
     }
 
     const iconStyle = {
@@ -67,18 +65,6 @@ function AudioPlayer() {
     }
 
 
-    const checkWidth = (e)=>{
-        const name = e.currentTarget.getAttribute("data-name")
-        if( name === "volumeSeeker"){
-            let width = volumeRef.current.clientWidth
-            const offset = e.nativeEvent.offsetX
-            const divprogress = offset / width * 100;
-            const vol =  (divprogress / 100).toFixed(2)
-
-            setVolume(divprogress)
-            audioFile.volume = vol
-        }
-    }
 
     useEffect(()=>{
         audioFile.volume = (volume / 100).toFixed(2)
@@ -135,7 +121,10 @@ function AudioPlayer() {
                 <img src={speaker} />
             </div>
 
-            {audioName}
+            <div className="audioPlayer__name">
+                {audioName}
+            </div>
+            
 
             <div className="audioTime__container">
             
@@ -203,8 +192,11 @@ function AudioPlayer() {
 
                             
                         </div>
-                        
-                        <div className="volumeBar__container">
+                        <VolumeBar audioFile={audioFile} iconStyle={iconStyle} volumeStyle={volumeStyle}
+                        volume={volume} setVolume={setVolume}
+                         />
+
+                        {/* <div className="volumeBar__container">
                             { volume === 0 ?
                                 (<button 
                                 className="noStyleButton"
@@ -219,11 +211,11 @@ function AudioPlayer() {
                                     <BsFillVolumeUpFill style={iconStyle}/>
                                 </button>)                                
                             }
+
                             <div ref={volumeRef} data-name="volumeSeeker"  onClick={checkWidth} className="volumeBar__gray">
-                                <div style={volumeStyle} className="volumeBar__progress">
-                                </div>
+                                <div style={volumeStyle} className="volumeBar__progress"></div>
                             </div>
-                        </div>
+                        </div> */}
 
             </div>
 
