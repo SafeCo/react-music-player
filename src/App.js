@@ -7,6 +7,28 @@ import {songsdata} from "./SongsData"
 function App() {
   const [songsList , setSongsList] = useState()
 
+  const [matches, setMatches] = useState(
+    window.matchMedia("(min-width: 800px)").matches
+  )
+  const [mobile, setMobile] = useState(
+    window.matchMedia("(min-width: 600px)").matches
+)
+  useEffect(() => {
+        window
+        .matchMedia("(min-width: 800px)")
+        .addEventListener('change', e => setMatches( e.matches ));
+        window
+        .matchMedia("(min-width: 600px)")
+        .addEventListener('change', e => setMobile( e.matches ));
+        return ()=>{
+            window
+            .matchMedia("(min-width: 800px)")
+            .removeEventListener('change', e => setMatches( e.matches ));
+            window
+            .matchMedia("(min-width: 600px)")
+            .removeEventListener('change', e => setMobile( e.matches ));
+        }
+    }, []);
   useEffect(()=>{
     setSongsList(songsdata.map((song)=>{
         return song
@@ -41,7 +63,7 @@ function App() {
         </div>
       </div>
       { songsList &&
-        <AudioPlayer songsList={songsList} addFile={addFile}/>
+        <AudioPlayer matches={matches} mobile={mobile} songsList={songsList} addFile={addFile}/>
       }
     </div>
   );

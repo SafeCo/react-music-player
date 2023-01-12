@@ -39,7 +39,10 @@
     display: flex;
     width: 100%;
 }
-
+.audioPlayer__controls-buttons{
+    display: flex;
+    flex: 2 1 0;
+}
 .uploadButton__container{
     display: flex;
     justify-content: flex-end;
@@ -55,9 +58,40 @@
     flex: 1 1 0;
 }
 
+.volumeBar__container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 0;
+}
 
 .audioTime__container{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.audioTime{
+    margin-bottom: 10px;
+}
+
+.resp{
+    flex: 1 1 0;
+}
+
+
+@media only screen and (max-width: 800px) {
+    .uploadButton__container{
+        justify-content: center;
+        flex: 1 1 0;
+    }
+    .audioPlayer__controls-container{
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .audioTime__container {
+        display: flex;
+        flex-direction: column;
+    }
 }

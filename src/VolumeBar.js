@@ -38,7 +38,7 @@ function VolumeBar({audioRef, iconStyle, volumeStyle, volume, setVolume}) {
 
 
     return (
-        <div className="volumeBar__container">
+        <>
             { volume === 0 ?
                 (<button 
                 className="noStyleButton"
@@ -73,7 +73,7 @@ function VolumeBar({audioRef, iconStyle, volumeStyle, volume, setVolume}) {
                     }
                 <div style={volumeStyle} className="volumeBar__progress"></div>
             </div>
-        </div>
+        </>
     )
 }
 
