@@ -8,20 +8,33 @@ import {MdOutlineForward5} from "react-icons/md"
 import {MdOutlineReplay5} from "react-icons/md"
 import speaker from "./speaker.svg"
 import VolumeBar from './VolumeBar';
+import { songsdata } from './SongsData';
 
 function AudioPlayer() {
 
     const inputRef = useRef()
+    const audioRef = useRef()
 
     const [audioName, setAudioName] = useState("")
     const [audioFile, setAudioFile] = useState({})
     const [audioLength, setAudioLength] = useState("")
     const [audioTime, setAudioTime] = useState("")
 
+    const [currentSong, setCurrentSong] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
     const [progress, setProgress] = useState("")
     const [volume, setVolume] = useState("")
+    const [songsList, setSongsList] = useState([])
 
+    useEffect(()=>{
+        setSongsList(songsdata.map((song)=>{
+            return song
+        }))
+    },[])
+
+    // useEffect(()=>{
+    //     console.log(songsList)
+    // },[songsList])
 
     const volumeStyle = {
         width : volume + "%",
@@ -46,6 +59,7 @@ function AudioPlayer() {
         var reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function () {
+            //ADD TO SONGSLIST
             const audio = new Audio(reader.result)
 
             audio.addEventListener("loadedmetadata", ()=>{setAudioLength(audio.duration)})
@@ -62,7 +76,18 @@ function AudioPlayer() {
         };
     }
 
+    
+    useEffect(()=>{
+        const songUrl = songsList[currentSong].url
+        const audio = new Audio(songUrl)
+        audio.addEventListener("loadedmetadata", ()=>{setAudioLength(audio.duration)})
+        audio.addEventListener('timeupdate', (event) => {
+            setAudioTime(audio.currentTime);
+            setProgress(audio.currentTime / audio.duration * 100 )
+        });
 
+        setAudioFile(audio);
+    },[currentSong])
 
     
 
@@ -86,11 +111,22 @@ function AudioPlayer() {
 
         return time ;
     }
+    useEffect(()=>{
+        console.log(currentSong)
+    },[currentSong])
 
-
-
-
-
+    function nextTrack (){
+        const sLength = songsList.length -1
+        if ( currentSong < sLength){
+            setCurrentSong(currentSong + 1)
+        }
+    }
+    function prevTrack (){
+        const sLength = songsList.length -1
+        if ( currentSong > 0){
+            setCurrentSong(currentSong - 1)
+        }
+    }
 
     function playFile(){
         audioFile.play()
@@ -112,6 +148,16 @@ function AudioPlayer() {
 
     return (
         <div className="audioPlayer__container">
+        <button onClick={()=>{audioRef.current.play()}}>
+            test
+        </button>
+        <button onClick={()=>{nextTrack()}}>
+            forward
+        </button>
+        <button onClick={()=>{prevTrack()}}>
+            prev
+        </button>
+
 
             <div className="audioPlayer__image">
                 <img src={speaker} />
