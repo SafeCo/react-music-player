@@ -14,7 +14,6 @@ function VolumeBar({audioRef, iconStyle, volumeStyle, volume, setVolume}) {
         let width = volumeRef.current.clientWidth
         const offset = e.nativeEvent.offsetX
         const divprogress = offset / width * 100;
-        const vol =  (divprogress / 100).toFixed(2)
         setSeekerVolume(Math.round(divprogress)+ "%")
 
         let bounds = volumeRef.current.getBoundingClientRect()
@@ -34,7 +33,7 @@ function VolumeBar({audioRef, iconStyle, volumeStyle, volume, setVolume}) {
 
     useEffect(()=>{
         audioRef.current.volume = (volume / 100).toFixed(2)
-    },[volume])
+    },[volume, audioRef])
 
 
     return (

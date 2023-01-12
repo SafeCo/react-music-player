@@ -20,15 +20,12 @@
 
 }
 
-
-
 .seekerBar__time{
     position: absolute;
-    bottom: 0;
-    border: solid green 1px;
+    bottom: 3px;
     background-color: white;
     height: 20px;
     transform: translate(-50%, -50%);
     color: black;
-
+    border-radius: 4px;
 }

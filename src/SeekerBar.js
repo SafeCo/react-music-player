@@ -12,7 +12,7 @@ function SeekerBar({toHoursAndMinutes, audioRef, progress}) {
 
     const barStyle = {
         width : progress + "%",
-        backgroundColor: "green",
+        backgroundColor: "purple",
     }
 
     const checkWidth = (e)=>{

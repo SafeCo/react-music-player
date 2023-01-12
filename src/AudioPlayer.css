@@ -29,6 +29,22 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 15px;
+}
+
+.mainImageAnim{
+    animation-name: tweeder;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes tweeder{
+    0%{ transform: scale(1.1) }
+    15%{ transform: scale(1.15) }
+    35%{ transform: scale(1.1)}
+    70%{ transform: scale(1.15) }
+    90%{ transform: scale(1.1) }
+    100%{ transform: scale(1.1) }
 }
 
 .audioPlayer__name{

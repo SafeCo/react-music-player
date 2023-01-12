@@ -20,8 +20,8 @@ function AudioPlayer({matches, mobile, songsList, addFile}) {
     const [audioTime, setAudioTime] = useState("")
     const [currentSong, setCurrentSong] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
-    const [progress, setProgress] = useState("")
-    const [volume, setVolume] = useState("")
+    const [progress, setProgress] = useState(0)
+    const [volume, setVolume] = useState(100)
 
 
     const volumeStyle = {
@@ -108,7 +108,11 @@ function AudioPlayer({matches, mobile, songsList, addFile}) {
 
 
             <div className="audioPlayer__image">
-                <img src={speaker} />
+                <img 
+                    className="mainImageAnim" 
+                    style={{ animationPlayState: isPlaying ? "running" : "paused" }}
+                    src={speaker} 
+                />
             </div>
 
             <div className="audioPlayer__name">
