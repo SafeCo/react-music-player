@@ -2,7 +2,7 @@
 import {useState,  useRef} from 'react'
 import "./SeekerBar.css"
 
-function SeekerBar({toHoursAndMinutes, audioFile, audioLength, progress}) {
+function SeekerBar({toHoursAndMinutes, audioRef, progress}) {
 
     const seekerRef = useRef()
 
@@ -19,14 +19,14 @@ function SeekerBar({toHoursAndMinutes, audioFile, audioLength, progress}) {
         let width = seekerRef.current.clientWidth
         const offset = e.nativeEvent.offsetX
         const divprogress = offset / width * 100;
-        audioFile.currentTime = divprogress / 100 * audioLength
+        audioRef.current.currentTime = divprogress / 100 * audioRef.current.duration
     }
 
     const checkTime = (e)=>{
         let width = seekerRef.current.clientWidth
         const offset = e.nativeEvent.offsetX
         const divprogress = offset / width * 100;
-        const time = divprogress / 100 * audioLength
+        const time = divprogress / 100 * audioRef.current.duration
         setSeekerTime(toHoursAndMinutes(Math.floor(time)))
 
         let bounds = seekerRef.current.getBoundingClientRect()
