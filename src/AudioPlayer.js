@@ -6,6 +6,8 @@ import { BsFillPauseCircleFill } from "react-icons/bs";
 import {BiUpload} from "react-icons/bi"
 import {MdOutlineForward5} from "react-icons/md"
 import {MdOutlineReplay5} from "react-icons/md"
+import {AiFillStepForward} from "react-icons/ai"
+import {AiFillStepBackward} from "react-icons/ai"
 import speaker from "./speaker.svg"
 import VolumeBar from './VolumeBar';
 
@@ -82,10 +84,10 @@ function AudioPlayer({songsList, addFile}) {
     }
 
     function addFive(){
-        audioRef.current.currentTime=  audioRef.current.currentTime + 5
+        audioRef.current.currentTime =  audioRef.current.currentTime + 5
     }
     function minusFive(){
-        audioRef.current.currentTime=  audioRef.current.currentTime - 5
+        audioRef.current.currentTime =  audioRef.current.currentTime - 5
     }
 
     return (
@@ -104,13 +106,6 @@ function AudioPlayer({songsList, addFile}) {
                 }
             />
 
-        <button onClick={()=>{nextTrack()}}>
-            forward
-        </button>
-        <button onClick={()=>{prevTrack()}}>
-            prev
-        </button>
-
 
             <div className="audioPlayer__image">
                 <img src={speaker} />
@@ -128,76 +123,83 @@ function AudioPlayer({songsList, addFile}) {
                         audioRef={audioRef}
                         progress={progress}
                     />
-
                 <div>{toHoursAndMinutes(Math.floor(audioDuration))}</div> 
-            
             </div>
 
-                    <div className="audioPlayer__controls-container">
-                        
-                        <div className="uploadButton__container" >
+            <div className="audioPlayer__controls-container">
+                <div className="uploadButton__container" >
+                    <button
+                    className="noStyleButton"
+                    onClick={()=>{inputRef.current.click()}}
+                    >
+                        <BiUpload style={iconStyle}/> 
+                    </button>
+
+                    <input
+                        style={{display: "none"}}
+                        ref={inputRef}
+                        type="file"
+                        onChange={e=>addFile(e)}
+                    />
+                </div>
+
+                <div className="audioPlayer__button-container">
+                    <button 
+                        className="noStyleButton"
+                        onClick={()=>{prevTrack()}}
+                    >
+                        <AiFillStepBackward style={iconStyle}/>
+                    </button>
+
+                    <button
+                    className="noStyleButton"
+                    onClick={()=>{minusFive()}}
+                    >
+                        <MdOutlineReplay5 style={iconStyle} />
+                    </button>
+
+                    { isPlaying?
+                        (
                             <button
-                            className="noStyleButton"
-                            onClick={()=>{inputRef.current.click()}}
+                            className="audioPlayer__pause-button noStyleButton"
+                            onClick={()=>{pauseFile()}}
                             >
-                                <BiUpload style={iconStyle}/> 
+                                <BsFillPauseCircleFill style={iconStyle}/>
                             </button>
-
-                            <input
-                                style={{display: "none"}}
-                                ref={inputRef}
-                                type="file"
-                                onChange={e=>addFile(e)}
-                            />
-                        </div>
-
-                        <div className="audioPlayer__button-container">
+                        ) :
+                        (   
                             <button
-                            className="noStyleButton"
-                            onClick={()=>{minusFive()}}
+                            className="audioPlayer__play-button noStyleButton"
+                            onClick={()=>{playFile()}}
                             >
-                                <MdOutlineReplay5 style={iconStyle} />
+                                <BsFillPlayCircleFill style={iconStyle} />
                             </button>
+                        )
+                    }
 
-                            { isPlaying?
-                                (
-                                    <button
-                                    className="audioPlayer__pause-button noStyleButton"
-                                    onClick={()=>{pauseFile()}}
-                                    >
-                                        <BsFillPauseCircleFill style={iconStyle}/>
-                                    </button>
-                                ) :
-                                (   
-                                    <button
-                                    className="audioPlayer__play-button noStyleButton"
-                                    onClick={()=>{playFile()}}
-                                    >
-                                        <BsFillPlayCircleFill style={iconStyle} />
-                                    </button>
-                                )
-                            }
+                    <button
+                    className="noStyleButton"
+                    onClick={()=>{addFive()}}
+                    > 
+                        <MdOutlineForward5 style={iconStyle} />
+                    </button>
 
-                            <button
-                            className="noStyleButton"
-                            onClick={()=>{addFive()}}
-                            > 
-                                <MdOutlineForward5 style={iconStyle} />
-                            </button>
+                    <button 
+                        className=" noStyleButton"
+                        onClick={()=>{nextTrack()}}
+                    >
+                        <AiFillStepForward style={iconStyle}/> 
+                    </button>    
 
-                            
-                        </div>
-                        <VolumeBar 
-                            audioFile={audioRef} 
-                            iconStyle={iconStyle} 
-                            volumeStyle={volumeStyle}
-                            volume={volume} 
-                            setVolume={setVolume}
-                        />
-
+                </div>
+                <VolumeBar 
+                    audioRef={audioRef} 
+                    iconStyle={iconStyle} 
+                    volumeStyle={volumeStyle}
+                    volume={volume} 
+                    setVolume={setVolume}
+                />
             </div>
-
-
         </div>
     )
 }

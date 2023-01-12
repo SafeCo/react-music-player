@@ -3,7 +3,7 @@ import "./VolumeBar.css"
 import { BsFillVolumeUpFill } from "react-icons/bs";
 import {BsVolumeMuteFill} from "react-icons/bs";
 
-function VolumeBar({audioFile, iconStyle, volumeStyle, volume, setVolume}) {
+function VolumeBar({audioRef, iconStyle, volumeStyle, volume, setVolume}) {
     const volumeRef = useRef()
 
     const [cursorPosition, setCursorPosition] = useState({ left: 0 })
@@ -29,11 +29,11 @@ function VolumeBar({audioFile, iconStyle, volumeStyle, volume, setVolume}) {
         const vol =  (divprogress / 100).toFixed(2)
 
         setVolume(divprogress)
-        audioFile.volume = vol
+        audioRef.current.volume = vol
     }
 
     useEffect(()=>{
-        audioFile.volume = (volume / 100).toFixed(2)
+        audioRef.current.volume = (volume / 100).toFixed(2)
     },[volume])
 
 

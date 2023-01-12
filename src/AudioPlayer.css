@@ -1,6 +1,10 @@
 .audioPlayer__container{
-    background: linear-gradient(0deg, rgba(0,0,0,1) 53%, rgba(255,144,0,1) 100%);
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
     height: 100vh;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;

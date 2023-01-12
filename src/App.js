@@ -33,6 +33,13 @@ function App() {
 
   return (
     <div className="App">
+      <div  className="background">
+        <div>
+          <div className="wave"></div>
+          <div className="wave"></div>
+          <div className="wave"></div>
+        </div>
+      </div>
       { songsList &&
         <AudioPlayer songsList={songsList} addFile={addFile}/>
       }
